@@ -28,7 +28,6 @@ use crate::{event::Event, monitor::MonitorHandle, platform_impl};
 /// forbidding it), as such it is neither `Send` nor `Sync`. If you need cross-thread access, the
 /// `Window` created from this `EventLoop` _can_ be sent to an other thread, and the
 /// `EventLoopProxy` allows you to wake up an `EventLoop` from another thread.
-///
 pub struct EventLoop<T: 'static> {
     pub(crate) event_loop: platform_impl::EventLoop<T>,
     pub(crate) _marker: ::std::marker::PhantomData<*mut ()>, // Not Send nor Sync
@@ -123,6 +122,8 @@ impl<T> EventLoop<T> {
     /// ## Platform-specific
     ///
     /// - **iOS:** Can only be called on the main thread.
+    /// 
+    /// [`EventLoop::new`]: crate::event_loop::EventLoop::new
     pub fn with_user_event() -> EventLoop<T> {
         EventLoop {
             event_loop: platform_impl::EventLoop::new(),
